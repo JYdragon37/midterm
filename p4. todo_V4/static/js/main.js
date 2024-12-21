@@ -243,22 +243,26 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // 프로젝트 선택 시 기간 표시
     if (projectSelect) {
-        projectSelect.addEventListener('change', function() {
+        projectSelect.addEventListener('change', async function() {
             const selectedProject = this.value ? JSON.parse(this.value) : null;
 
             if (selectedProject) {
-                const startDate = new Date(selectedProject.startDate);
-                const endDate = new Date(selectedProject.endDate);
-                const durationDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-                
-                document.getElementById('detail-name').textContent = selectedProject.name;
-                document.getElementById('detail-start').textContent = selectedProject.startDate;
-                document.getElementById('detail-end').textContent = selectedProject.endDate;
-                document.getElementById('detail-duration').textContent = 
-                    `${durationDays}일 (최대 ${durationDays}회 수행 가능)`;
-                
-                projectDetails.style.display = 'block';
-                updateTaskTable(selectedProject);
+                try {
+                    // 프로젝트의 최신 데이터를 서버에서 가져오기
+                    const response = await fetch(`/get_project/${selectedProject.id}`);
+                    const result = await response.json();
+                    
+                    if (result.status === 'success') {
+                        document.getElementById('detail-name').textContent = result.project.name;
+                        document.getElementById('detail-start').textContent = result.project.startDate;
+                        document.getElementById('detail-end').textContent = result.project.endDate;
+                        projectDetails.style.display = 'block';
+                        updateTaskTable(result.project);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('프로젝트 데이터를 가져오는데 실패했습니다.');
+                }
             } else {
                 projectDetails.style.display = 'none';
             }
@@ -383,22 +387,20 @@ function updateProjectSelect(projects) {
     }
 }
 
-function updateTaskTable(project, dateRange, today) {
+function updateTaskTable(project) {
     const table = document.getElementById('task-table');
     const thead = table.querySelector('thead tr');
     const tbody = table.querySelector('tbody');
     
-    // 테재 날짜 범위가 없으면 생성
-    if (!dateRange) {
-        const currentDate = new Date();
-        dateRange = [];
-        for (let i = -2; i <= 2; i++) {
-            const date = new Date(currentDate);
-            date.setDate(date.getDate() + i);
-            dateRange.push(date.toISOString().split('T')[0]);
-        }
-        today = new Date().toISOString().split('T')[0];
+    // 테재 날짜 기준으로 날짜 범위 생성
+    const currentDate = new Date();
+    const dateRange = [];
+    for (let i = -2; i <= 2; i++) {
+        const date = new Date(currentDate);
+        date.setDate(date.getDate() + i);
+        dateRange.push(date.toISOString().split('T')[0]);
     }
+    const today = new Date().toISOString().split('T')[0];
 
     // 테이블 헤더 업데이트
     thead.innerHTML = '';
@@ -457,8 +459,50 @@ function updateTaskTable(project, dateRange, today) {
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.className = 'task-checkbox';
-                checkbox.checked = task.completions && task.completions[date] || false;
-                checkbox.addEventListener('change', () => handleCheckboxChange(checkbox, project, task, date));
+                
+                // completions 상태 확인 및 설정
+                console.log(`Setting checkbox state for task ${task.id}, date ${date}:`, task.completions);
+                if (task.completions && task.completions[date] === true) {
+                    checkbox.checked = true;
+                }
+
+                checkbox.addEventListener('change', async () => {
+                    try {
+                        console.log('Checkbox changed:', {
+                            taskId: task.id,
+                            date: date,
+                            checked: checkbox.checked,
+                            currentCompletions: task.completions
+                        });
+
+                        const response = await fetch('/update_task_status', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                taskId: task.id,
+                                date: date,
+                                completed: checkbox.checked
+                            })
+                        });
+
+                        const result = await response.json();
+                        console.log('Server response:', result);
+
+                        if (result.status === 'success') {
+                            task.completions = result.completions;
+                            console.log('Updated completions:', task.completions);
+                        } else {
+                            checkbox.checked = !checkbox.checked;
+                            alert('상태 업데이트에 실패했습니다: ' + result.message);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        checkbox.checked = !checkbox.checked;
+                        alert('상태 업데이트에 실패했습니다.');
+                    }
+                });
 
                 td.appendChild(checkbox);
                 tr.appendChild(td);
