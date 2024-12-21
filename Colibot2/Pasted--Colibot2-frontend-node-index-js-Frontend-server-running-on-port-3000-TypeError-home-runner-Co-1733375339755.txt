@@ -1,0 +1,40 @@
+~/Colibot2/frontend$ node index.js
+Frontend server running on port 3000
+TypeError: /home/runner/Colibot2/frontend/views/index.ejs:190
+    188|             <!-- 뉴스 영역 -->
+    189|             <div class="news-container">
+ >> 190|                 <% 
+    191|                 const sections = {
+    192|                     '종합': [],
+    193|                     '경제': [],
+
+news.forEach is not a function
+    at eval ("/home/runner/Colibot2/frontend/views/index.ejs":47:22)
+    at index (/home/runner/Colibot2/node_modules/ejs/lib/ejs.js:703:17)
+    at tryHandleCache (/home/runner/Colibot2/node_modules/ejs/lib/ejs.js:274:36)
+    at exports.renderFile [as engine] (/home/runner/Colibot2/node_modules/ejs/lib/ejs.js:491:10)
+    at View.render (/home/runner/Colibot2/node_modules/express/lib/view.js:135:8)
+    at tryRender (/home/runner/Colibot2/node_modules/express/lib/application.js:657:10)
+    at Function.render (/home/runner/Colibot2/node_modules/express/lib/application.js:609:3)
+    at ServerResponse.render (/home/runner/Colibot2/node_modules/express/lib/response.js:1049:7)
+    at /home/runner/Colibot2/frontend/index.js:65:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+TypeError: /home/runner/Colibot2/frontend/views/index.ejs:190
+    188|             <!-- 뉴스 영역 -->
+    189|             <div class="news-container">
+ >> 190|                 <% 
+    191|                 const sections = {
+    192|                     '종합': [],
+    193|                     '경제': [],
+
+news.forEach is not a function
+    at eval ("/home/runner/Colibot2/frontend/views/index.ejs":47:22)
+    at index (/home/runner/Colibot2/node_modules/ejs/lib/ejs.js:703:17)
+    at tryHandleCache (/home/runner/Colibot2/node_modules/ejs/lib/ejs.js:274:36)
+    at exports.renderFile [as engine] (/home/runner/Colibot2/node_modules/ejs/lib/ejs.js:491:10)
+    at View.render (/home/runner/Colibot2/node_modules/express/lib/view.js:135:8)
+    at tryRender (/home/runner/Colibot2/node_modules/express/lib/application.js:657:10)
+    at Function.render (/home/runner/Colibot2/node_modules/express/lib/application.js:609:3)
+    at ServerResponse.render (/home/runner/Colibot2/node_modules/express/lib/response.js:1049:7)
+    at /home/runner/Colibot2/frontend/index.js:65:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

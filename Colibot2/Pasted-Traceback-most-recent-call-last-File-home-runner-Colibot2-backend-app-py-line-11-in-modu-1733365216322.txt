@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/home/runner/Colibot2/backend/app.py", line 11, in <module>
+    start_scheduler()
+  File "/home/runner/Colibot2/backend/scheduler.py", line 27, in start_scheduler
+    update_data()
+  File "/home/runner/Colibot2/backend/scheduler.py", line 23, in update_data
+    capture_weather()
+  File "/home/runner/Colibot2/backend/modules/weather.py", line 6, in capture_weather
+    driver = webdriver.Chrome()
+             ^^^^^^^^^^^^^^^^^^
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 66, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 241, in __init__
+    self.start_session(capabilities)
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 329, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium-browser is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:

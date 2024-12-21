@@ -1,0 +1,28 @@
+hrome 드라이버 시작...
+날씨 캡처 중 오류 발생: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+
+Traceback (most recent call last):
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/common/driver_finder.py", line 64, in _binary_paths
+    raise ValueError(f"The path is not a valid file: {path}")
+ValueError: The path is not a valid file: /nix/store/chromium-unwrapped-*/bin/chromedriver
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/runner/Colibot2/backend/modules/weather.py", line 74, in capture_weather
+    raise e
+  File "/home/runner/Colibot2/backend/modules/weather.py", line 43, in capture_weather
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 50, in __init__
+    if finder.get_browser_path():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/common/driver_finder.py", line 47, in get_browser_path
+    return self._binary_paths()["browser_path"]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/Colibot2/.pythonlibs/lib/python3.11/site-packages/selenium/webdriver/common/driver_finder.py", line 78, in _binary_paths
+    raise NoSuchDriverException(msg) from err
+selenium.common.exceptions.NoSuchDriverException: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location

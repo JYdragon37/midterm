@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 20px;
+        }
+
+        .trend-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .trend-container h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .trend-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .trend-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+
+        .trend-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .news-container h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .news-section {
+            margin-bottom: 20px;
+        }
+
+        .news-section h3 {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .news-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .news-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9em;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .news-item a:hover {
+            color: #007bff;
+        }
+
+        .weather-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .weather-container h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .weather-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+    </style>
+    <title>Coli-Bot 대시보드</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="margin-bottom: 5px;">Coli-Bot 대시보드</h1>
+            <small id="datetime" style="display: block; color: #666; text-align: center; margin-bottom: 20px;"></small>
+        </div>
+
+        <div class="trend-container">
+            <h2>실시간 트렌드</h2>
+            <ul class="trend-list">
+                <% trending.forEach((trend, index) => { %>
+                    <li class="trend-item"><%= (index + 1) %>. <%= trend %></li>
+                <% }); %>
+            </ul>
+        </div>
+
+        <div class="news-container">
+            <h2>뉴스</h2>
+            <% 
+            const sections = ['종합', '경제', 'IT', '세계'];
+            sections.forEach(section => {
+                const sectionNews = news.filter(item => item.section === section);
+                if (sectionNews.length > 0) {
+            %>
+                <div class="news-section">
+                    <h3><%= section %></h3>
+                    <ul class="news-list">
+                        <% sectionNews.forEach(item => { %>
+                            <li class="news-item">
+                                <a href="<%= item.link %>" target="_blank">
+                                    <%= item.title %>
+                                </a>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            <% 
+                }
+            }); 
+            %>
+        </div>
+
+        <div class="weather-container">
+            <h2>날씨</h2>
+            <img src="<%= weatherImage %>" alt="날씨">
+        </div>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                weekday: 'long',
+                hour12: false
+            };
+            document.getElementById('datetime').textContent = 
+                now.toLocaleString('ko-KR', options);
+        }
+
+        // 초기 실행
+        updateDateTime();
+        // 1분마다 업데이트
+        setInterval(updateDateTime, 60000);
+    </script>
+</body>
+</html>
