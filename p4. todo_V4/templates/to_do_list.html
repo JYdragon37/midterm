@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>To-Do List</h1>
+<h2 id="current-date" class="current-date"></h2>
+
+<div class="project-section">
+    <div class="collapsible-section">
+        <button class="collapsible">Create New Project</button>
+        <div class="content">
+            <form id="project-form" class="project-form">
+                <div class="form-group">
+                    <label for="project-name">Project Name:</label>
+                    <input type="text" id="project-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="end-date">End Date:</label>
+                    <input type="date" id="end-date" required>
+                </div>
+                <div id="project-duration" class="project-duration"></div>
+                <button type="submit">Create Project</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="project-selection">
+        <h2>Select Project</h2>
+        <select id="project-select">
+            <option value="">Choose a project...</option>
+        </select>
+    </div>
+
+    <div id="project-details" class="project-details">
+        <h3>Project Details</h3>
+        <p><strong>Name:</strong> <span id="detail-name"></span></p>
+        <p><strong>Start Date:</strong> <span id="detail-start"></span></p>
+        <p><strong>End Date:</strong> <span id="detail-end"></span></p>
+        <p><strong>Duration:</strong> <span id="detail-duration"></span></p>
+        
+        <div class="project-actions">
+            <button id="edit-project-btn">Edit Project</button>
+            <button id="delete-project-btn">Delete Project</button>
+        </div>
+        
+        <div class="task-section">
+            <h3>Add New Task</h3>
+            <form id="task-form" class="task-form">
+                <div class="form-group">
+                    <label for="task-name">Task Name:</label>
+                    <input type="text" id="task-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-goal">Goal (times to complete):</label>
+                    <input type="number" id="task-goal" min="1" required>
+                </div>
+                <button type="submit">Add Task</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="task-table-container">
+        <h3>Tasks</h3>
+        <table id="task-table" class="task-table">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Goal</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 축하 메시지 모달 -->
+<div id="celebration-modal" class="modal">
+    <div class="modal-content">
+        <div class="celebration-message"></div>
+        <div class="celebration-animation"></div>
+    </div>
+</div>
+
+<!-- 프로젝트 수정 모달 -->
+<div id="edit-project-modal" class="modal">
+    <div class="modal-content">
+        <h2>Edit Project</h2>
+        <form id="edit-project-form">
+            <div class="form-group">
+                <label for="edit-project-name">Project Name:</label>
+                <input type="text" id="edit-project-name" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-start-date">Start Date:</label>
+                <input type="date" id="edit-start-date" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-end-date">End Date:</label>
+                <input type="date" id="edit-end-date" required>
+            </div>
+            <button type="submit">Save Changes</button>
+            <button type="button" class="cancel-btn">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<!-- 태스크 수정 모달 -->
+<div id="edit-task-modal" class="modal">
+    <div class="modal-content">
+        <h2>Edit Task</h2>
+        <form id="edit-task-form">
+            <div class="form-group">
+                <label for="edit-task-name">Task Name:</label>
+                <input type="text" id="edit-task-name" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-task-goal">Goal:</label>
+                <input type="number" id="edit-task-goal" min="1" required>
+            </div>
+            <button type="submit">Save Changes</button>
+            <button type="button" class="cancel-btn">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const initialProjects = {{ initial_projects|default([])|tojson|safe }};
+</script>
+{% endblock %}
