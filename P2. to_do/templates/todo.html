@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project and Task Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.4.0/confetti.browser.min.js"></script>
+    <style>
+        /* Basic styles for the table and forms */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .today {
+            background-color: #ffeb3b; /* Light yellow for today's date */
+        }
+        .start-date {
+            color: red; /* Highlight start date with red */
+        }
+        .date-header {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+            table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Project and Task Management</h1>
+    <div class="date-header" id="todayDate"></div>
+
+    <!-- Project Creation Section -->
+    <h2>Create New Project</h2>
+    <form id="projectForm">
+        <input type="text" name="projectName" placeholder="Project Name" required>
+        <input type="date" name="startDate" id="startDate" required>
+        <input type="date" name="endDate" id="endDate" required>
+        <button type="submit">Add Project</button>
+        <div id="opportunityCount"></div>
+    </form>
+
+    <!-- Task Addition Section -->
+    <h2>Add Task to Selected Project</h2>
+    <form id="taskForm">
+        <input type="text" name="taskName" placeholder="Task Name" required>
+        <input type="number" name="goal" placeholder="Goal (times to complete)" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Task List Section -->
+    <h2>Tasks for Selected Project</h2>
+    <table id="taskTable">
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Goal</th>
+                <th>Date -2</th>
+                <th>Date -1</th>
+                <th>Today</th>
+                <th>Date +1</th>
+                <th>Date +2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Task rows will be populated dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        const projects = JSON.parse(localStorage.getItem('projects')) || [];
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || {};
+        const today = new Date();
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Seoul' };
+        const todayString = today.toLocaleDateString('en-CA', options); // Format: YYYY-MM-DD
+
+        // Display today's date
+        document.getElementById('todayDate').textContent = `Today: ${todayString}`;
+
+        // Calculate opportunities based on today's date
+        document.getElementById('endDate').addEventListener('change', function() {
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(this.value);
+            const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+            document.getElementById('opportunityCount').textContent = `Total Opportunities: ${daysDiff} days`;
+        });
+
+        document.getElementById('projectForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const projectName = this.projectName.value;
+            const startDate = this.startDate.value;
+            const endDate = this.endDate.value;
+
+            // Add project to the projects array
+            const newProject = { name: projectName, startDate, endDate };
+            projects.push(newProject);
+            localStorage.setItem('projects', JSON.stringify(projects));
+            updateProjectSelect();
+            this.reset();
+        });
+
+        function updateProjectSelect() {
+            const projectSelect = document.getElementById('projectSelect');
+            projectSelect.innerHTML = '<option value="">-- Select a Project --</option>';
+            projects.forEach((project, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = project.name;
+                projectSelect.appendChild(option);
+            });
+        }
+
+        document.getElementById('taskForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const taskName = this.taskName.value;
+            const goal = this.goal.value;
+            const selectedProjectIndex = document.getElementById('projectSelect').value;
+
+            if (!tasks[selectedProjectIndex]) {
+                tasks[selectedProjectIndex] = [];
+            }
+
+            tasks[selectedProjectIndex].push({ name: taskName, goal: goal, completion: [0, 0, 0, 0, 0] });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            displayTasks(selectedProjectIndex);
+            this.reset();
+        });
+
+        function displayTasks(projectIndex) {
+            const taskTableBody = document.getElementById('taskTable').querySelector('tbody');
+            taskTableBody.innerHTML = '';
+
+            const project = projects[projectIndex];
+            const startDate = new Date(project.startDate);
+            const endDate = new Date(project.endDate);
+            const dateHeaders = [];
+
+            // Generate date headers
+            for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+                const dateString = d.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+                dateHeaders.push(dateString);
+            }
+
+            // Add completion checkboxes for each date
+            tasks[projectIndex].forEach((task, taskIndex) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${task.name}</td>
+                    <td>${task.goal}</td>
+                `;
+
+                dateHeaders.forEach((date, index) => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.onchange = () => toggleCompletion(projectIndex, taskIndex, index, checkbox);
+                    row.appendChild(checkbox);
+                });
+
+                taskTableBody.appendChild(row);
+            });
+        }
+
+        function toggleCompletion(projectIndex, taskIndex, dayIndex, checkbox) {
+            tasks[projectIndex][taskIndex].completion[dayIndex] = checkbox.checked ? 1 : 0;
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            displayTasks(projectIndex);
+        }
+
+        // Load tasks for the first project on page load
+        if (projects.length > 0) {
+            updateProjectSelect();
+            displayTasks(0); // Display tasks for the first project by default
+        }
+    </script>
+</body>
+</html>
