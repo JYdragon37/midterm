@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 검색어 및 뉴스</title>
+    <style>
+        /* 날씨 섹션 스타일 */
+        .weather-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 20px auto;  /* 상단 마진 제거, 하단 마진 추가 */
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .weather-section img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* 기존 스타일은 그대로 유지 */
+        /* ... */
+    </style>
+</head>
+<body>
+    <!-- 날씨 섹션을 최상단에 배치 -->
+    {% if weather_screenshot %}
+    <div class="weather-section">
+        <img src="{{ url_for('static', filename='weather.png') }}" alt="날씨 정보">
+    </div>
+    {% endif %}
+
+    <!-- 타임스탬프 -->
+    <p>{{ timestamp }}</p>
+
+    <!-- 실시간 검색어 -->
+    <h2>실시간 검색어</h2>
+    <ul>
+        {% for term in terms %}
+        <li>{{ term }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- 인기 뉴스 -->
+    <h2>인기 뉴스</h2>
+    <ul>
+        {% for news in popular_news %}
+        <li>{{ news | safe }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html> 

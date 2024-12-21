@@ -1,0 +1,23 @@
+Feature 1,Feature 2,Correlation
+max_ratio,keyword_ratio_max,1.0
+keyword_ratio_max,max_ratio,1.0
+freq_used_max,max_ratio,0.8292453504895785
+max_ratio,freq_used_max,0.8292453504895785
+keyword_ratio_max,freq_used_max,0.8292453504895785
+freq_used_max,keyword_ratio_max,0.8292453504895785
+sentiment_positive,keyword_ratio_sum,0.7833508376829252
+keyword_ratio_sum,sentiment_positive,0.7833508376829252
+freq_used_max,freq_used_sum,0.7760732545103919
+freq_used_sum,freq_used_max,0.7760732545103919
+keyword_ratio_sum,is_provided,0.7546593948568513
+is_provided,keyword_ratio_sum,0.7546593948568513
+text_count,sentiment_positive,0.7515330696489223
+sentiment_positive,text_count,0.7515330696489223
+keyword_ratio_sum,text_count,0.7026698154573089
+text_count,keyword_ratio_sum,0.7026698154573089
+sentiment_negative,has_question,-0.7637626158259734
+has_question,sentiment_negative,-0.7637626158259734
+sentiment_neutral,text_count,-0.8025590465812812
+text_count,sentiment_neutral,-0.8025590465812812
+sentiment_positive,sentiment_neutral,-0.822365069069801
+sentiment_neutral,sentiment_positive,-0.822365069069801

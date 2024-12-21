@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotto_Cado - 귀여운 로또 추천 봇</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+        img {
+            width: 150px;
+            height: 150px;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .result-set {
+            background: #ffffff;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lotto_Cado - {{ next_round }}회차</h1>
+    <img src="/static/avocado.png" alt="Avocado">
+    <button onclick="generateLottoSets()">추천 번호 생성하기 🍀</button>
+    <div class="results" id="results">
+        <!-- 추천 번호 결과가 여기에 표시됩니다 -->
+    </div>
+
+    <script>
+        async function generateLottoSets() {
+            const response = await fetch("/generate");
+            const sets = await response.json();
+
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = ""; // 기존 결과 제거
+
+            sets.forEach((set, index) => {
+                const resultDiv = document.createElement("div");
+                resultDiv.className = "result-set";
+                resultDiv.textContent = `${index + 1}번 세트: ${set.join(", ")}`;
+                resultsDiv.appendChild(resultDiv);
+            });
+        }
+    </script>
+</body>
+</html>

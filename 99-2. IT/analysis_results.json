@@ -1,0 +1,133 @@
+[
+  {
+    "text_count": "123",
+    "frequently_used_expressions": [
+      "HP 빅터스 16 (2회)",
+      "가성비 게이밍 노트북 (2회)",
+      "리뷰 (2회)"
+    ],
+    "keyword_ratio": "20%",
+    "sentiment_distribution": {
+      "positive": "30%",
+      "neutral": "70%",
+      "negative": "0%"
+    },
+    "tone": "neutral",
+    "has_negative_content": false,
+    "has_ad": false,
+    "has_brand": true,
+    "has_promotion": false,
+    "is_provided": false,
+    "overaction": false,
+    "is_my_money": false,
+    "structure": 3,
+    "technical_details": true,
+    "price": false,
+    "has_question": false
+  },
+  {
+    "text_count": 130,
+    "frequently_used_expressions": [
+      "노트북(2회)",
+      "에이수스 비보북 S 16 OLED(2회)",
+      "리뷰(2회)"
+    ],
+    "keyword_ratio": 15.38,
+    "sentiment_distribution": {
+      "positive": 50,
+      "neutral": 50,
+      "negative": 0
+    },
+    "tone": "neutral",
+    "has_negative_content": false,
+    "has_ad": true,
+    "has_brand": true,
+    "has_promotion": false,
+    "is_provided": true,
+    "overaction": false,
+    "is_my_money": false,
+    "structure": 4,
+    "technical_details": true,
+    "price": false,
+    "has_question": false
+  },
+  {
+    "text_count": 96,
+    "frequently_used_expressions": [
+      "갤럭시북5 Pro 360(3회)",
+      "노트북(2회)",
+      "태블릿(2회)"
+    ],
+    "keyword_ratio": 15,
+    "sentiment_distribution": {
+      "positive": 50,
+      "neutral": 50,
+      "negative": 0
+    },
+    "tone": "neutral",
+    "has_negative_content": false,
+    "has_ad": true,
+    "has_brand": true,
+    "has_promotion": false,
+    "is_provided": false,
+    "overaction": false,
+    "is_my_money": false,
+    "structure": 3,
+    "technical_details": true,
+    "price": false,
+    "has_question": false
+  },
+  {
+    "text_count": 132,
+    "frequently_used_expressions": [
+      "갤럭시 북4 엣지 노트북(2회)",
+      "리뷰(2회)",
+      "USB-C(1회)",
+      "65W 충전 어댑터(1회)"
+    ],
+    "keyword_ratio": 20.45,
+    "sentiment_distribution": {
+      "positive": 30,
+      "neutral": 70,
+      "negative": 0
+    },
+    "tone": "neutral",
+    "has_negative_content": false,
+    "has_ad": false,
+    "has_brand": true,
+    "has_promotion": false,
+    "is_provided": false,
+    "overaction": false,
+    "is_my_money": false,
+    "structure": 4,
+    "technical_details": true,
+    "price": false,
+    "has_question": false
+  },
+  {
+    "text_count": 132,
+    "frequently_used_expressions": [
+      "리뷰(2회)",
+      "노트북(2회)",
+      "삼성 갤럭시북4 프로 360 NT960QGK-K71A(1회)"
+    ],
+    "keyword_ratio": "15%",
+    "sentiment_distribution": {
+      "positive": "30%",
+      "neutral": "70%",
+      "negative": "0%"
+    },
+    "tone": "neutral",
+    "has_negative_content": false,
+    "has_ad": false,
+    "has_brand": true,
+    "has_promotion": false,
+    "is_provided": false,
+    "overaction": false,
+    "is_my_money": false,
+    "structure": 4,
+    "technical_details": true,
+    "price": false,
+    "has_question": false
+  }
+]
