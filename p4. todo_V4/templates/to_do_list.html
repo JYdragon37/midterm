@@ -131,4 +131,7 @@
 <script>
     const initialProjects = {{ initial_projects|default([])|tojson|safe }};
 </script>
+
+<!-- JavaScript 모듈 불러오기 -->
+<script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
