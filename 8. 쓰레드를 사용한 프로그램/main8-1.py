@@ -36,3 +36,5 @@ if __name__ == "__main__":
     thread2.join()
     
     print("모든 작업이 완료되었습니다.")
+
+#기초

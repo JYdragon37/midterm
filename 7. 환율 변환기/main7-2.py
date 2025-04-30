@@ -36,3 +36,5 @@ def get_current_exchange_rate():
 
 if __name__ == "__main__":
     get_current_exchange_rate()
+
+#기초

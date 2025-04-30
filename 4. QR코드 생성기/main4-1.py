@@ -29,3 +29,6 @@ if __name__ == "__main__":
     url = "https://www.naver.com"
     save_path = "/Users/jeongyong/Desktop/파이썬과 40개의 작품들/4. QR코드 생성기/naver_qr_code.png"
     generate_qr_code(url, save_path)
+
+
+#기초

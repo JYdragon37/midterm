@@ -21,3 +21,5 @@ def text_to_speech(text, language='ko', speed=1.2):
 if __name__ == "__main__":
     text = "안녕하세요, 오늘은 파이썬 프로젝트의 시작일입니다. 먼저 음성 변환 작업을 실험하고 있습니다. 좋은 결과가 있기를"
     text_to_speech(text)
+
+#기초

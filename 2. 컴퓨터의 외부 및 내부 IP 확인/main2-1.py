@@ -29,3 +29,5 @@ def get_external_ip():
 if __name__ == "__main__":
     get_internal_ip()
     get_external_ip()
+
+#기초

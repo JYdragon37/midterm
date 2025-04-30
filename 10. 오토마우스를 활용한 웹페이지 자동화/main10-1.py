@@ -38,3 +38,5 @@ if __name__ == "__main__":
     check_modules()
     print("마우스 좌표를 추적하려면 Ctrl+C로 종료하세요.")
     print_mouse_coordinates()
+
+#기초

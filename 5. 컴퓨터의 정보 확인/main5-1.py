@@ -35,3 +35,5 @@ def get_computer_info():
 
 if __name__ == "__main__":
     get_computer_info()
+
+    #기초
